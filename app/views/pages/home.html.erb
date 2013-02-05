@@ -4,7 +4,10 @@
 
 <p>A link to a demo of grasping math should go here.</p>
 
-<p><%= link_to 'users', users_path %></p>
+
+<% if (current_user&&current_user.admin_flag == 1) %>
+  <p><%= link_to 'users', users_path %></p>
+<% end %>
 
 <p>
 	<% if current_user %>

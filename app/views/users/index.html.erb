@@ -30,4 +30,7 @@
 
 <br />
 
-<%= link_to 'New User', new_user_path %>
+<% if (current_user&&current_user.admin_flag == 1) %>
+  <%= link_to 'New User', new_user_path %> 
+<% end %>
+

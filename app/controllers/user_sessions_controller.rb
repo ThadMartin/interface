@@ -1,16 +1,15 @@
 class UserSessionsController < ApplicationController
 
-  before_filter :require_user, :only => :destroy
+  before_filter :require_user, :except => [:create, :new]
   
   # GET /user_sessions
   # GET /user_sessions.json
   def index
-    @user_sessions = UserSession.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @user_sessions }
-    end
+    #@user_sessions = User.logged_in.all
+    #respond_to do |format|
+    #  format.html # index.html.erb
+    #  format.json { render json: @user_sessions }
+    #end
   end
 
   # GET /user_sessions/1
@@ -47,7 +46,7 @@ class UserSessionsController < ApplicationController
 
     respond_to do |format|
       if @user_session.save
-        format.html { redirect_to users_path, notice: 'User session was successfully created.' }
+        format.html { redirect_to home_path, notice: 'User session was successfully created.' }
         format.json { render json: :users, status: :created, location: @user_session }
       else
         format.html { render action: "new" }

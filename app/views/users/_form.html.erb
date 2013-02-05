@@ -10,14 +10,17 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :username %><br />
-    <%= f.text_field :username %>
-  </div>
-  <div class="field">
+  <!-- <div class="field">
     <%= f.label :email %><br />
     <%= f.text_field :email %>
+  </div> -->
+
+ <% if ((current_user&&current_user.username == @user.username)or (current_user&&current_user.admin_flag == 1)) %>
+
+  <p> Email: <%= @user.email %> </p>
+   <div class="field">
+    <%= f.label :username %><br />
+    <%= f.text_field :username %>
   </div>
   <div class="field">
     <%= f.label :password %><br />
@@ -30,4 +33,5 @@
   <div class="actions">
     <%= f.submit %>
   </div>
+  <% end %>
 <% end %>
