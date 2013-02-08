@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130131005124) do
+ActiveRecord::Schema.define(:version => 20130205195647) do
+
+  create_table "infiles", :force => true do |t|
+    t.string   "infile_file_name"
+    t.string   "infile_content_type"
+    t.integer  "infile_file_size"
+    t.datetime "infile_updated_at"
+    t.integer  "user_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
 
   create_table "user_sessions", :force => true do |t|
     t.datetime "created_at", :null => false

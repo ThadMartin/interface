@@ -1,0 +1,148 @@
+{
+    "problem-list": [
+        {
+        "start":"9x+5+4",
+        "options":["manualArithmetic", "noFactorize", "noMoveComplex"],
+        "value":{
+                        "accuracy-coins": 3,
+                        "min-errors": 1,
+                        "max-errors": 6,
+                        "speed-coins": 3,
+                        "min-speed": 1.0,
+                        "max-speed": 15.0
+                            }
+        },
+        {
+        "start":"8y+2y+y+2",
+        "options":["manualArithmetic", "noFactorize", "noMoveComplex"],
+        "value":{
+                        "accuracy-coins": 3,
+                        "min-errors": 1,
+                        "max-errors": 6,
+                        "speed-coins": 3,
+                        "min-speed": 1.0,
+                        "max-speed": 15.0
+                            }
+        },
+        {
+        "start":"2x+4+x+5",
+        "options":["noFactorize", "noMoveComplex"],
+        "value":{
+                        "accuracy-coins": 3,
+                        "min-errors": 1,
+                        "max-errors": 6,
+                        "speed-coins": 3,
+                        "min-speed": 1.0,
+                        "max-speed": 15.0
+                            }
+        },
+        {
+        "start":"2x+3+5+8x",
+        "options":["noFactorize", "noMoveComplex"],
+        "value":{
+                        "accuracy-coins": 3,
+                        "min-errors": 1,
+                        "max-errors": 6,
+                        "speed-coins": 3,
+                        "min-speed": 1.0,
+                        "max-speed": 15.0
+                            }
+        },
+        {
+        "start":"2+2x+-5",
+        "options":["manualArithmetic", "noFactorize", "noMoveComplex"],
+        "value":{
+                        "accuracy-coins": 3,
+                        "min-errors": 1,
+                        "max-errors": 6,
+                        "speed-coins": 3,
+                        "min-speed": 1.0,
+                        "max-speed": 15.0
+                            }
+        },
+        {
+        "start":"-5x+2+3+5x",
+        "options":["manualArithmetic", "noFactorize", "noMoveComplex"],
+        "value":{
+                        "accuracy-coins": 3,
+                        "min-errors": 1,
+                        "max-errors": 6,
+                        "speed-coins": 3,
+                        "min-speed": 1.0,
+                        "max-speed": 15.0
+                            }
+        },
+        {
+        "start":"2y+2y+y+-5",
+        "options":["manualArithmetic", "noFactorize", "noMoveComplex"],
+        "value":{
+                        "accuracy-coins": 3,
+                        "min-errors": 1,
+                        "max-errors": 6,
+                        "speed-coins": 3,
+                        "min-speed": 1.0,
+                        "max-speed": 15.0
+                            }
+        },
+        {
+        "start":"-6x+2+2x+-6",
+        "options":["noFactorize", "noMoveComplex"],
+        "value":{
+                        "accuracy-coins": 3,
+                        "min-errors": 1,
+                        "max-errors": 6,
+                        "speed-coins": 3,
+                        "min-speed": 1.0,
+                        "max-speed": 15.0
+                            }
+        },
+        {
+        "start":"4x+3+2+2x",
+        "options":["manualArithmetic", "noFactorize", "noMoveComplex"],
+        "value":{
+                        "accuracy-coins": 3,
+                        "min-errors": 1,
+                        "max-errors": 6,
+                        "speed-coins": 3,
+                        "min-speed": 1.0,
+                        "max-speed": 15.0
+                            }
+        },
+        {
+        "start":"4x+-3+4x+6",
+        "options":["manualArithmetic", "noFactorize"],
+        "value":{
+                        "accuracy-coins": 3,
+                        "min-errors": 1,
+                        "max-errors": 6,
+                        "speed-coins": 3,
+                        "min-speed": 1.0,
+                        "max-speed": 15.0
+                            }
+        },
+        {
+        "start":"3x+2x+2+-3",
+        "options":["noFactorize", "noMoveComplex"],
+        "value":{
+                        "accuracy-coins": 3,
+                        "min-errors": 1,
+                        "max-errors": 6,
+                        "speed-coins": 3,
+                        "min-speed": 1.0,
+                        "max-speed": 15.0
+                            }
+        },
+        {
+        "start":"3+2x+5x+-4",
+        "options":["noFactorize", "noMoveComplex"],
+        "value":{
+                        "accuracy-coins": 3,
+                        "min-errors": 1,
+                        "max-errors": 6,
+                        "speed-coins": 3,
+                        "min-speed": 1.0,
+                        "max-speed": 15.0
+                            }
+        }
+    ]
+}

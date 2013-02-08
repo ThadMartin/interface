@@ -1,4 +1,26 @@
-<%#= form_for :User, :html => { :multipart => true } do |form| %>
-<%#= form.file_field :attachment %>
+<%#= link_to 'infile', users_path, :action => 'add_infile' %>
+<%#= form_for @user, :html => { :multipart => true } do |form_first| %>
+<%#= select_tag @fnm, (options_for_select (@picker)), {:onchange =>  } %>
+<p><%#= form_first.submit %></p>
+<%# logger.debug (@fnm) %>
+<%# logger.debug ("hey") %>
+
+<%= form_for @user, :html => { :multipart => true } do |form| %>
+<%# @user.infiles.build %>
 <%#= form.submit "Save" %>
 <%# end %>
+
+
+<%= form.fields_for :infiles do |infile_fields| %>
+  <% if infile_fields.object.new_record? %>
+    <p>
+      <%= infile_fields.file_field :infile %>
+    </p>
+  <% else %>
+    <p><%= infile_fields.object.infile_file_name %>  
+        <%= infile_fields.check_box :_destroy %>
+      </p>
+  <% end %>
+<% end %>
+<p><%= form.submit %></p>
+<% end %>
