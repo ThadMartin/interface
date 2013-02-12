@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Fileselected:</b>
+  <%= @currentpick.fileselected %>
+</p>
+
+<p>
+  <b>Proplemselected:</b>
+  <%= @currentpick.proplemselected %>
+</p>
+
+
+<%= link_to 'Edit', edit_currentpick_path(@currentpick) %> |
+<%= link_to 'Back', currentpicks_path %>

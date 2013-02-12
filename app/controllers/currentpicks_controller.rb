@@ -1,186 +1,103 @@
-class UsersController < ApplicationController
-
-  before_filter :require_same_user, :except => [:index, :new, :create]
-  #before_filter :require_user
-
-  # GET /users
-  # GET /users.json
+class CurrentpicksController < ApplicationController
+  # GET /currentpicks
+  # GET /currentpicks.json
   def index
-    @users = User.all
-    logger.debug("user index")
+    logger.debug("currentpick index")
+    @currentpicks = Currentpick.all
+
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @users }
+      format.json { render json: @currentpicks }
     end
   end
 
-  # GET /users/1
-  # GET /users/1.json
+  # GET /currentpicks/1
+  # GET /currentpicks/1.json
   def show
-    logger.debug("user show")
-    @user = User.find(params[:id])
+    logger.debug("currentpick show")
+    @currentpick = Currentpick.find(params[:id])
+
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @user }
+      format.json { render json: @currentpick }
     end
   end
 
-  # GET /users/new
-  # GET /users/new.json
+  # GET /currentpicks/new
+  # GET /currentpicks/new.json
   def new
-    logger.debug("user new")
-    @user = User.new
-    #@user.infiles.build
+    logger.debug("currentpick new")
+    @currentpick = Currentpick.new
+
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @user }
+      format.json { render json: @currentpick }
     end
   end
 
-  # GET /users/1/edit
+  # GET /currentpicks/1/edit
   def edit
-    logger.debug("user edit")
-    @user = User.find(params[:id])
-    @user.infiles.build
-    #@user.currentpicks.new
+    logger.debug("currentpick edit")
+    @currentpick = Currentpick.find(params[:id])
   end
 
-  # POST /users
-  # POST /users.json
+  # POST /currentpicks
+  # POST /currentpicks.json
   def create
-    logger.debug("user create")
-    @user = User.new(params[:user])
+    logger.debug("currentpick create")
+    @currentpick = Currentpick.new(params[:currentpick])
+
     respond_to do |format|
-      if @user.save
-        format.html { redirect_to home_path, notice: 'User was successfully created.' }
-        format.json { render json: @user, status: :created, location: @user }
+      if @currentpick.save
+        format.html { redirect_to @currentpick, notice: 'Currentpick was successfully created.' }
+        format.json { render json: @currentpick, status: :created, location: @currentpick }
       else
         format.html { render action: "new" }
+        format.json { render json: @currentpick.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /currentpicks/1
+  # PUT /currentpicks/1.json
+  # def update
+  #   logger.debug("currentpick index")
+  #   @currentpick = Currentpick.find(params[:id])
+
+  #   respond_to do |format|
+  #     if @currentpick.update_attributes(params[:currentpick])
+  #       format.html { redirect_to @currentpick, notice: 'Currentpick was successfully updated.' }
+  #       format.json { head :no_content }
+  #     else
+  #       format.html { render action: "edit" }
+  #       format.json { render json: @currentpick.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
+def update
+    logger.debug("user update>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    #logger.debug(@user.problemselectedstring)
+    @user = current_user
+    respond_to do |format|
+      if @user.update_attributes(params[:user])
+        flash.notice = 'Update sucessful.'
+        format.html { redirect_to generate_path  }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  # PUT /users/1
-  # PUT /users/1.json
-  def update
-    logger.debug("user update>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-    #logger.debug(@user.problemselectedstring)
-    @user = User.find(params[:id])
-
-    if (params[:change_infile] || params[:delete_problem_button]|| params[:add_delete_infile]|| params[:first_button]|| params[:second_button]|| params[:fourth_button]|| params[:add_problem_button]|| params[:new_file])|| params[:third_button]
-
-
-      respond_to do |format|
-        if @user.update_attributes(params[:user])
-          flash.notice = 'Update sucessful.'
-          format.html { redirect_to generate_path  }
-          format.json { head :no_content }
-        else
-          format.html { render action: "edit" }
-          format.json { render json: @user.errors, status: :unprocessable_entity }
-        end
-      end
-
-    else
-
-     
-      respond_to do |format|
-        if @user.update_attributes(params[:user])
-          flash.notice = 'Update sucessful.'
-          format.html { redirect_to home_path  }
-          format.json { head :no_content }
-        else
-          format.html { render action: "edit" }
-          format.json { render json: @user.errors, status: :unprocessable_entity }
-        end
-      end
- 
-    end
     #@user.infiles.build
-    if @user.fileselected && @user.fileselected.length > 0 && FileTest.exists?(Rails.root.join('public','json',@user.fileselected))
-
-      @problemlist = File.read(Rails.root.join('public','json',@user.fileselected))
-      @problemlisthash = JSON.parse(@problemlist)
-      logger.debug(@problemlisthash)
-      @problems = @problemlisthash ["problem-list"]
-    end
+    @problemlist = File.read(Rails.root.join('public','json',@user.fileselected))
+    @problemlisthash = JSON.parse(@problemlist)
+    logger.debug(@problemlisthash)
+    @problems = @problemlisthash ["problem-list"]
 
     if params[:change_infile]
       @user.problemselectedstring = ""
       @user.save
     end
-
-    if params[:new_file]
-      if @user.newfilename.length > 0
-
-        @newproblem = {"start"=>"new", "options"=>[], "value"=>{"accuracy-coins"=>3, "min-errors"=>1, "max-errors"=>6, "speed-coins"=>3, "min-speed"=>1.0, "max-speed"=>15.0}}
-        @newproblemarray = []
-
-        #@problems.each_with_index do |i, index|
-          @newproblemarray << @newproblem
-        #   if @problems[index]["start"] == @user.problemselectedstring
-        #     @problemnumber = index
-        #     @newproblemarray << @newproblem
-        #     logger.debug ("index to add:")
-        #     logger.debug (index)
-        #   end
-        # end
-
-        # @user.infiles.build
-
-        #@problems.add_at(@problemnumber)
-
-        #@problems << @newproblem
-
-        @user.problemselectedstring = "new"
-        @user.fileselected = @user.newfilename
-        @user.save
-
-        @problems = {"problem-list" => @newproblemarray}
-        @new_json = (@problems.to_json)
-
-        @localfilename = (Rails.root.join('public','json',@user.newfilename))
-
-        #@user.infile.new
-
-        File.open(Rails.root.join('public','json',@user.newfilename),"w") do |f|
-          f.write(@new_json)
-          #@user.infiles = f
-        end
-
-        #@logger.debug(@user.infiles.infile)
-
-        # File.open(Rails.root.join('public','json',@user.newfilename),"r") do |f|
-        #   #f.write(@new_json)
-        # #   @user.infiles.object.infile_file_name = f
-        # # end
-        # logger.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-        # #User.new(:infiles => File.open('/Users/thad/railsProjects/interfaceInputTrial/public/json/hope2.json'), 'r')
-        # @user = current_user
-        @user.infiles.build
-        current_user.infiles.each do |infile|
-        #    logger.debug("instance methods")
-        #    logger.debug(infile.inspect)
-           if !infile.infile_file_name 
-        #       File.open(Rails.root.join('public','json',@user.newfilename),"r") do |f|
-        #       File.open(Rails.root.join('public','json',@user.newfilename),"r") do |f|
-        #       #   #f.write(@new_json)
-                infile.infile_file_name = @user.newfilename
-                infile.user_id = @user.id
-                infile.save
-               end
-             end
-        #   end
-
-
-      #end
-        #@user.infile = @localfilename
-        #@user.save
-
-      end # of if filename valid
-
-    end # of if new file
 
     if params[:second_button]
 
@@ -289,10 +206,10 @@ class UsersController < ApplicationController
         @optionshash << "tapToFactorize"
       end
       if @user.MoveComplex == 1
-        @optionshash << "noMoveComplex"
+        @optionshash << "moveComplex"
       end
       if @user.PlusSpacing == 1
-        @optionshash << "noFactorize"
+        @optionshash << "plusSpacing"
       end
       if @user.TimesSpacing == 1
         @optionshash << "timesSpacing"
@@ -413,26 +330,16 @@ class UsersController < ApplicationController
    
   end # of update
 
-
-#end
-
-  # DELETE /users/1
-  # DELETE /users/1.json
+  # DELETE /currentpicks/1
+  # DELETE /currentpicks/1.json
   def destroy
-    logger.debug("user destroy")
-    @user = User.find(params[:id])
-    @user.destroy
+    logger.debug("currentpick index")
+    @currentpick = Currentpick.find(params[:id])
+    @currentpick.destroy
 
     respond_to do |format|
-      format.html { redirect_to users_url }
+      format.html { redirect_to currentpicks_url }
       format.json { head :no_content }
     end
   end
-
-  # def add_infile
-  #   logger.debug ("added infile?????????????????????????????")
-  #   @user = User.find(params[:id])
-  #   @user.infiles.build
-
-  # end
 end

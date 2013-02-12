@@ -1,0 +1,25 @@
+<%= form_for(@currentpick) do |f| %>
+  <% if @currentpick.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@currentpick.errors.count, "error") %> prohibited this currentpick from being saved:</h2>
+
+      <ul>
+      <% @currentpick.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :fileselected %><br />
+    <%= f.text_field :fileselected %>
+  </div>
+  <div class="field">
+    <%= f.label :proplemselected %><br />
+    <%= f.number_field :proplemselected %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

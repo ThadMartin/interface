@@ -1,10 +1,18 @@
 InterfaceInput::Application.routes.draw do
+  resources :currentpicks
+
+
+  get "infiles/refresh"
+
   root :to => 'pages#home'
-  resources :users, :user_sessions
+  resources :users, :user_sessions, :infile
   match 'login' => 'user_sessions#new', :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout
   match 'home' => 'pages#home'
   match 'generate' => 'pages#generate'
+  match 'print_log' => 'pages#print_log'
+  #match 'changeproblem' => 'pages#changeproblem', :as => :changeproblem
+
 end
 
   # The priority is based upon order of creation:
