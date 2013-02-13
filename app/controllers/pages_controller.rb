@@ -19,15 +19,23 @@
       @picker = []
 
       @listOfInfiles.each do |i|
-        @picker <<  i ["infile_file_name"]
+        if i["infile_file_name"] && i["infile_file_name"].length>0
+          @picker <<  i ["infile_file_name"]
+        end
       end
       #logger.debug(@picker.inspect)
       #@picker = []
     	# end
 
+      # <%# else %>
+      # <p><%#= infile_fields.object.infile_file_name %>  
+      # <%#= infile_fields.check_box :_destroy %> delete
+      # </p>
+
+
       #if params[:first_button]
       logger.debug(@user.fileselected)
-      logger.debug("about to get problem list")
+      logger.debug("thats file selected")
 
       if @user.fileselected && @user.fileselected.length > 0 && FileTest.exists?(Rails.root.join('public','json',@user.fileselected))
 
@@ -37,7 +45,7 @@
         @problemlisthash = JSON.parse(@problemlist)
       end
 
-      logger.debug(@problemlist)
+      #logger.debug(@problemlist)
       if @problemlisthash
         @problems = @problemlisthash ["problem-list"]
       end
@@ -52,9 +60,9 @@
       if @problems
 
         @problems.each_with_index do |i, index|
-          logger.debug ("indexes")
-          logger.debug (i)
-          logger.debug (index)
+          #logger.debug ("indexes")
+          #logger.debug (i)
+          #logger.debug (index)
           @picker2 <<  i["start"]
           #   logger.debug("What's i")
           if @user.problemselectedstring.length > 1
@@ -69,8 +77,8 @@
         end  # end of get problems and options
       end  # of if problems
 
-      logger.debug("params are .....................")
-      logger.debug(params)
+      #logger.debug("params are .....................")
+      #logger.debug(params)
       @user.ExactCompleteMatch = 0
       @user.ManualArithmetic = 0
       @user.ManualArithmetic = 0
@@ -99,8 +107,8 @@
       if @optionshash2
 
         @optionshash2.each do |i|
-          logger.debug("reading options as:")
-          logger.debug(i)
+          #logger.debug("reading options as:")
+          #logger.debug(i)
           if i.downcase == "ExactCompleteMatch".downcase
             @user.ExactCompleteMatch = 1
           end

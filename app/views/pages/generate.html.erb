@@ -10,6 +10,7 @@
 * Visit http://www.dynamicdrive.com/ for full source code
 ***********************************************/
 
+
 function handleEnter (field, event) {
   var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
   if (keyCode == 13) {
@@ -27,20 +28,18 @@ function handleEnter (field, event) {
 
   </script>
 
-
+<div id="left" style="width:500px;float:left;">
 
 <hr>
 <%#= link_to 'infile', users_path, :action => 'add_infile' %>
 <%= form_for @user, :html => { :multipart => true } do |form_second| %>
-
+<%# @user.infiles.build %>
 <%= form_second.fields_for :infiles do |infile_fields| %>
 <% if infile_fields.object.new_record? && (current_user.admin_flag == 1) %>
 <p>
   <%= infile_fields.file_field :infile %>
-</p>
-<% else %>
-<p><%= infile_fields.object.infile_file_name %>  
-  <%= infile_fields.check_box :_destroy %> delete
+   <%= submit_tag "Add file", :name => 'add_delete_infile' %>
+
 </p>
 
 <% end %>
@@ -52,19 +51,22 @@ function handleEnter (field, event) {
     <%= submit_tag "New File", :name => 'new_file' %>
 </p>
 
-
-<p>
-  
-   <%= submit_tag "Add or delete files", :name => 'add_delete_infile' %>
-</p>
-
 <% end %>
 <hr>
 
-<%= form_for @user, :html => { :multipart => true } do |form_first| %>
+<%= form_for @user, :html => { :multipart => true } do |form_again| %>
 <%# @listOfInfiles = (Infile.select('infile_file_name')) %>
 <%# logger.debug (@listOfInfiles) %>
-<%= select_tag "user[fileselected]", (options_for_select ([["Select", ""]]+@picker),@user.fileselected)%>
+
+<p>
+  Select problem file: 
+<%= select_tag "user[fileselected]", (options_for_select ([["Select", ""]]+@picker),@user.fileselected),{ :onchange => "this.form.submit();",:name => 'change_infile'}%>
+<%= submit_tag "Delete Problem File", :confirm => 'Are you sure?', :name => 'delete_infile' %>
+
+</p>
+
+<%end%>
+
 <%# @user = current_user %>
 <%#= collection_select @user, @user.infiles.all, :id, :infile_file_name, {} %>
 <%#= select_tag @theFile, @picker, @picker%>
@@ -77,17 +79,18 @@ function handleEnter (field, event) {
 <%#= button_to 'Go!',  print_log_path(:pickedFile => @theFile) %>
 
 
-<p>
-  <%= submit_tag "Change Problem File", :name => 'change_infile' %>
-</p>
+
+  <%#= submit_tag "Change Problem File", :name => 'change_infile' %>
+
+
+
 <%# logger.debug (@fnm) %>
 <%# logger.debug ("hey") %>
 <%# end %>
 
 <hr>
 
-
-<%#= form_for @user, :html => { :multipart => true } do |form_first| %>
+<%= form_for @user, :html => { :multipart => true } do |form_again| %>
 
 <%#= form_for @user do |form_first| %>
 
@@ -96,22 +99,29 @@ function handleEnter (field, event) {
 <%#= collection_select(:user, :id, @picker2, :show, :show, {}, {:multiple => true}) %>
 <p>
   <%= submit_tag "Select Problem", :name => 'first_button' %>
-</p>
+  <%= submit_tag "Add Problem", :name => 'add_problem_button', :disabled => @change_disabled %>
+<%= submit_tag "Delete Problem", :confirm => 'Are you sure?', :name => 'delete_problem_button', :disabled => @change_disabled   %></p>
+
+
 <% logger.debug (@user.problemselectedstring) %>
 <%# logger.debug ("hey") %>
 <%# logger.debug (@picker2.inspect) %>
 
 <hr>
 
+</div>
 
+<div id="right" style="width:500px;float:right;">
+
+<hr>
 <%# end %>
 
 <%#= form_for @user, :action => 'changeproblem', :html => { :multipart => true } do |form_fourth| %>
 
 
   <p>
-    <%= form_first.label :"Change problem" %>
-    <%= form_first.text_field :problemchange, :value => @user.problemselectedstring, :onkeypress=>"return handleEnter(this, event)" %> 
+    <%= form_again.label :"Change problem" %>
+    <%= form_again.text_field :problemchange, :value => @user.problemselectedstring, :onkeypress=>"return handleEnter(this, event)" %> 
   </p>
 
   <% if @user.problemselectedstring && @user.problemselectedstring.length > 0 %>
@@ -120,62 +130,62 @@ function handleEnter (field, event) {
   <% @change_disabled = true %>
   <% end %>
 
-  <p><%= submit_tag "Change Problem", :name => 'second_button', :disabled => @change_disabled %></p>
+  <%#= submit_tag "Change Problem", :name => 'second_button', :disabled => @change_disabled %>
 
 
   <hr>
   <p>
-    <%= form_first.check_box :ExactCompleteMatch %> ExactCompleteMatch
-    <%= form_first.check_box :ManualArithmetic %> ManualArithmetic
-    <%= form_first.check_box :QuickElimination %> QuickElimination 
-    <%= form_first.check_box :ManualDone %> ManualDone 
-    <%= form_first.check_box :Editable %> Editable 
-    <%= form_first.check_box :ManualFactoring %> ManualFactoring 
-    <%= form_first.check_box :ManualTranspose %> ManualTranspose 
-    <%= form_first.check_box :TapToFactorize %> TapToFactorize 
-    <%= form_first.check_box :MoveComplex %> noMoveComplex 
-    <%= form_first.check_box :PlusSpacing %> noFactorize 
-    <%= form_first.check_box :TimesSpacing %> TimesSpacing 
-    <%= form_first.check_box :EqualsSpacing %> EqualsSpacing 
-    <%= form_first.check_box :Subtraction %> Subtraction 
-    <%= form_first.check_box :GameTimeOut %> GameTimeOut 
-
+    <%= form_again.check_box :ExactCompleteMatch %> ExactCompleteMatch
+    <%= form_again.check_box :ManualArithmetic %> ManualArithmetic
+    <%= form_again.check_box :QuickElimination %> QuickElimination </p>
+    <p>
+    <%= form_again.check_box :ManualDone %> ManualDone 
+    <%= form_again.check_box :Editable %> Editable 
+    <%= form_again.check_box :ManualFactoring %> ManualFactoring </p>
+    <p>
+    <%= form_again.check_box :ManualTranspose %> ManualTranspose 
+    <%= form_again.check_box :TapToFactorize %> TapToFactorize 
+    <%= form_again.check_box :MoveComplex %> noMoveComplex </p>
+    <p>
+    <%= form_again.check_box :PlusSpacing %> noFactorize 
+    <%= form_again.check_box :TimesSpacing %> TimesSpacing 
+    <%= form_again.check_box :EqualsSpacing %> EqualsSpacing </p>
+    <p>
+    <%= form_again.check_box :Subtraction %> Subtraction 
+    <%= form_again.check_box :GameTimeOut %> GameTimeOut 
 
   </p>
-  <p>
-    <%= submit_tag "Select Options", :name => 'third_button', :disabled => @change_disabled %>
-  </p>
+  
+    <%#= submit_tag "Select Options", :name => 'third_button', :disabled => @change_disabled %>
+  
   <hr>
 <p>
-  <%= form_first.label :"Change accuracy coins" %>
-  <%= form_first.text_field :accuracycoins, :value => @user.accuracycoins, :onkeypress=>"return handleEnter(this, event)" %> 
+  <%= form_again.label :"Accuracy coins" %>
+  <%= form_again.text_field :accuracycoins, :size => 5, :value => @user.accuracycoins, :onkeypress=>"return handleEnter(this, event)" %> 
 </p>
 <p>
-  <%= form_first.label :"Change min errors" %>
-  <%= form_first.text_field :minerrors, :value => @user.minerrors, :onkeypress=>"return handleEnter(this, event)" %> 
+  <%= form_again.label :"Min errors" %>
+  <%= form_again.text_field :minerrors, :size => 5, :value => @user.minerrors, :onkeypress=>"return handleEnter(this, event)" %> 
 </p>
 <p>
-  <%= form_first.label :"Change max errors" %>
-  <%= form_first.text_field :maxerrors, :value => @user.maxerrors, :onkeypress=>"return handleEnter(this, event)" %> 
+  <%= form_again.label :"Max errors" %>
+  <%= form_again.text_field :maxerrors, :size => 5, :value => @user.maxerrors, :onkeypress=>"return handleEnter(this, event)" %> 
 </p>
 <p>
-  <%= form_first.label :"Change speed coins" %>
-  <%= form_first.text_field :speedcoins, :value => @user.speedcoins, :onkeypress=>"return handleEnter(this, event)" %> 
+  <%= form_again.label :"Speed coins" %>
+  <%= form_again.text_field :speedcoins, :size => 5, :value => @user.speedcoins, :onkeypress=>"return handleEnter(this, event)" %> 
 </p>
 <p>
-  <%= form_first.label :"Change min speed" %>
-  <%= form_first.text_field :minspeed, :value => @user.minspeed, :onkeypress=>"return handleEnter(this, event)" %> 
+  <%= form_again.label :"Min speed" %>
+  <%= form_again.text_field :minspeed, :size => 5, :value => @user.minspeed, :onkeypress=>"return handleEnter(this, event)" %> 
 </p>
 <p>
-  <%= form_first.label :"Change max speed" %>
-  <%= form_first.text_field :maxspeed, :value => @user.maxspeed, :onkeypress=>"return handleEnter(this, event)" %> 
+  <%= form_again.label :"Max speed" %>
+  <%= form_again.text_field :maxspeed, :size => 5, :value => @user.maxspeed, :onkeypress=>"return handleEnter(this, event)" %> 
 </p>
 
-  <p><%= submit_tag "Change vaule and speed", :name => 'fourth_button', :disabled => @change_disabled %></p>
+  <p><%= submit_tag "Change problem", :name => 'fourth_button', :disabled => @change_disabled %></p>
 
  <hr>
-<p><%= submit_tag "Add Problem", :name => 'add_problem_button', :disabled => @change_disabled %></p>
-<p><%= submit_tag "Delete Problem", :name => 'delete_problem_button', :disabled => @change_disabled %></p>
-
-<hr>
+</div>
 <% end %>
